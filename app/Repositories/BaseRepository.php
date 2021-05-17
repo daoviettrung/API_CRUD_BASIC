@@ -2,21 +2,24 @@
 
 namespace App\Repositories;
 
-use App\Http\Resources\Product as ProductResource;
 use App\Repositories\RepositoryInterface;
 
 abstract class BaseRepository implements RepositoryInterface
 {
-    //model muốn tương tác
     protected $model;
 
-   //khởi tạo
+    /**
+     * construct
+     * call function setModel
+     */
     public function __construct()
     {
         $this->setModel();
     }
 
-    //lấy model tương ứng
+    /**
+     * get the corresponding model
+     */
     abstract public function getModel();
 
     /**
@@ -29,25 +32,43 @@ abstract class BaseRepository implements RepositoryInterface
         );
     }
 
+    /**
+     * Get all
+     * @return object
+     */
     public function getAll()
     {
-        $products = $this->model->all();
-        // vi du ve resource api
-        return ProductResource::collection($products);
+        $datModel = $this->model->all();
+        return $datModel;
     }
 
+    /**
+     * Get one
+     * @param $id
+     * @return object
+     */
     public function find($id)
     {
         $result = $this->model->find($id);
-
         return $result;
     }
 
+    /**
+     * Create
+     * @param array $attributes
+     * @return boolean
+     */
     public function create($attributes = [])
     {
         return $this->model->create($attributes);
     }
 
+    /**
+     * Update
+     * @param $id
+     * @param array $attributes
+     * @return boolean
+     */
     public function update($id, $attributes = [])
     {
         $result = $this->find($id);
@@ -55,10 +76,14 @@ abstract class BaseRepository implements RepositoryInterface
             $result->update($attributes);
             return $result;
         }
-
         return false;
     }
 
+    /**
+     * Delete
+     * @param $id
+     * @return boolean
+     */
     public function destroy($id)
     {
         $result = $this->find($id);
@@ -67,7 +92,6 @@ abstract class BaseRepository implements RepositoryInterface
 
             return true;
         }
-
         return false;
     }
 }

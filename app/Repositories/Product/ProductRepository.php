@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Product;
 
 use App\Repositories\BaseRepository;
@@ -6,14 +7,19 @@ use App\Repositories\Product\ProductRepositoryInterface;
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {
-    //lấy model tương ứng
+    /**
+     * get the corresponding model
+     */
     public function getModel()
     {
         return \App\Models\Product::class;
     }
 
+    /**
+     * get 5 titles in product
+     */
     public function getProduct()
     {
-        return $this->model->select('product_name')->take(5)->get();
+        return $this->model->select('title')->take(5)->get();
     }
 }
