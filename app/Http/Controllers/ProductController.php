@@ -33,23 +33,23 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        if($this->productRepo->create($data)){
-            return true;
-        }
+         if($this->productRepo->create($data)){
+            return response()->json($data, 201);
+         }
     }
 
     public function update(Request $request, $id)
     {
         $data = $request->all();
         if($this->productRepo->update($id, $data)){
-            return true;
+            return response()->json($data, 200);
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         if($this->productRepo->delete($id)){
-            return true;
+            return response()->json(null, 204);
         }
     }
 }

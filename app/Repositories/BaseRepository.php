@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\Product as ProductResource;
 use App\Repositories\RepositoryInterface;
 
 abstract class BaseRepository implements RepositoryInterface
@@ -30,7 +31,9 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model->all();
+        $products = $this->model->all();
+        // vi du ve resource api
+        return ProductResource::collection($products);
     }
 
     public function find($id)
@@ -56,7 +59,7 @@ abstract class BaseRepository implements RepositoryInterface
         return false;
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $result = $this->find($id);
         if ($result) {
